@@ -36,9 +36,9 @@ def start_cmd(loop):
     @asyncio.coroutine
     def wrapped(reader, writer, text, *args, **kwargs):
         msg = " ".join(text)
-        writer.write("%s\n" % repr((args, kwargs)))
+        # writer.write("%s\n" % repr((args, kwargs)))
         yield from client.send_message(madchan, msg)
-        yield from writer.drain()
+        # yield from writer.drain()
         return
 
         # print(madchan)
@@ -96,8 +96,10 @@ def start_client(token):
     @client.event
     async def on_ready():
         loop = asyncio.get_event_loop()
-        asyncio.ensure_future(start_queue(client, loop))
-        asyncio.ensure_future(start_cmd(loop).interact())
+        if "noqueue" not in sys.argv:
+            asyncio.ensure_future(start_queue(client, loop))
+        if "nocmd" not in sys.argv:
+            asyncio.ensure_future(start_cmd(loop).interact())
         # executor = concurrent.futures.ThreadPoolExecutor()
         # asyncio.get_event_loop().run_in_executor(executor, start_queue, client, loop)
         # asyncio.get_event_loop().run_in_executor(executor, start_cmd, loop)
@@ -128,7 +130,6 @@ def start_client(token):
         # log the message
         logger.info("server={server}:channel={channel}:user={{id:{userid},username:{username},nick:{usernick}}}:message:{message}".format(server=message.server.name,
                                                                                                                                           channel=message.channel.name, userid=message.author.id, username=message.author.name, usernick=message.author.nick, message=repr(message.clean_content)))
-
         if message.content == "WEW":
             return await client.send_message(message.channel, "LAD")
         elif message.content == "wew":

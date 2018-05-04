@@ -89,7 +89,7 @@ def start_queue(client, loop):
                     logger.info("sending embed: {}".format(embed))
                     await client.send_message(queue_channel, embed=embed)
                 queues = queues_new
-                await asyncio.sleep(10)
+                await asyncio.sleep(15)
             except KeyboardInterrupt:
                 break
             except:
