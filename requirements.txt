@@ -1,1 +1,6 @@
+aioconsole
+beautifulsoup4
 discord.py
+osuapi
+python-dateutil
+requests

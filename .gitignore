@@ -1,2 +1,13 @@
 .virtualenv
 .env
+
+logs/*
+!logs/.gitkeep
+
+data/*
+!data/.gitkeep
+
+tmp
+
+__pycache__
+*.pyc
